@@ -1,0 +1,19 @@
+# Halol Crypto AI — Python dependencies
+# Install with: pip install -r requirements.txt
+
+# ── Telegram Bot ──────────────────────────────
+python-telegram-bot==21.3         # Async PTB v20+ with webhooks
+
+# ── HTTP / async ─────────────────────────────
+aiohttp==3.9.5                    # Async HTTP client for API calls
+
+# ── Database ─────────────────────────────────
+# SQLite is built-in — no extra package needed for default mode
+# For PostgreSQL: pip install psycopg2-binary sqlalchemy
+
+# ── Configuration ────────────────────────────
+python-dotenv==1.0.1              # Load .env files
+
+# ── Optional: serve webapp locally ───────────
+# aiohttp already provides a basic HTTP server
+# For production: use nginx + gunicorn or a platform CDN

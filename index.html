@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Halol Crypto AI</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- BOTTOM NAV -->
+<!-- ══════════════════════════════════════════════════ -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="nav-item active" data-page="home">
+    <svg viewBox="0 0 24 24"><path d="M3 12L12 3l9 9v9H15v-6H9v6H3z"/></svg>
+    <span>Home</span>
+  </button>
+  <button class="nav-item" data-page="signals">
+    <svg viewBox="0 0 24 24"><path d="M3 18h4v-8H3v8zm7 0h4V6h-4v12zm7 0h4v-4h-4v4z"/></svg>
+    <span>Signals</span>
+  </button>
+  <button class="nav-item" data-page="watchlist">
+    <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+    <span>Watchlist</span>
+  </button>
+  <button class="nav-item" data-page="education">
+    <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm-1 13.24L5 13.08v4.42L12 21l7-3.5v-4.42l-6 3.16z"/></svg>
+    <span>Learn</span>
+  </button>
+  <button class="nav-item" data-page="market">
+    <svg viewBox="0 0 24 24"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>
+    <span>Market</span>
+  </button>
+  <button class="nav-item" data-page="settings">
+    <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96a6.93 6.93 0 0 0-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+    <span>Settings</span>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- PAGES                                             -->
+<!-- ══════════════════════════════════════════════════ -->
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <div class="page-header">
+    <h1>Halol Crypto AI</h1>
+    <span class="badge badge-halal">HALAL SPOT</span>
+  </div>
+  <div class="page-content">
+
+    <!-- Market sentiment card -->
+    <div class="card sentiment-card" id="sentimentCard">
+      <div class="sentiment-header">
+        <span class="sentiment-label">Market Sentiment</span>
+        <span class="sentiment-badge" id="sentimentBadge">Loading...</span>
+      </div>
+      <div class="sentiment-row">
+        <div class="sentiment-item">
+          <span class="sentiment-coin">₿ BTC</span>
+          <span class="sentiment-price" id="btcPrice">—</span>
+          <span class="sentiment-chg" id="btcChange">—</span>
+        </div>
+        <div class="sentiment-divider"></div>
+        <div class="sentiment-item">
+          <span class="sentiment-coin">⟠ ETH</span>
+          <span class="sentiment-price" id="ethPrice">—</span>
+          <span class="sentiment-chg" id="ethChange">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top signals quick access -->
+    <div class="section-header">
+      <h2>🔥 Top Signals</h2>
+      <button class="see-all-btn" onclick="switchPage('signals')">See All</button>
+    </div>
+    <div class="top-signals-grid" id="topSignalsGrid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+
+    <!-- Quick actions -->
+    <div class="section-header"><h2>⚡ Quick Actions</h2></div>
+    <div class="quick-actions">
+      <button class="action-card" onclick="switchPage('signals')">
+        <span class="action-icon">📈</span>
+        <span>Signals</span>
+      </button>
+      <button class="action-card" onclick="switchPage('watchlist')">
+        <span class="action-icon">⭐</span>
+        <span>Watchlist</span>
+      </button>
+      <button class="action-card" onclick="switchPage('market')">
+        <span class="action-icon">📊</span>
+        <span>Market</span>
+      </button>
+      <button class="action-card" onclick="switchPage('education')">
+        <span class="action-icon">🎓</span>
+        <span>Learn</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- SIGNALS PAGE -->
+<div class="page" id="page-signals">
+  <div class="page-header">
+    <h1>📈 Signals</h1>
+    <span class="badge badge-halal">SPOT ONLY</span>
+  </div>
+  <div class="page-content">
+    <div class="search-bar">
+      <svg viewBox="0 0 24 24" class="search-icon"><path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      <input type="text" id="signalSearch" placeholder="Search coin... (optional)" oninput="filterCoins(this.value)" />
+    </div>
+    <div class="coins-grid" id="coinsGrid">
+      <!-- populated by JS -->
+    </div>
+  </div>
+</div>
+
+<!-- SIGNAL DETAIL PAGE (hidden, shown over signals) -->
+<div class="page" id="page-signal-detail">
+  <div class="page-header">
+    <button class="back-btn" onclick="closeSignalDetail()">◀️ Back</button>
+    <h1 id="detailTitle">Signal</h1>
+    <button class="watchlist-btn" id="detailWatchlistBtn" onclick="toggleWatchlistFromDetail()">⭐</button>
+  </div>
+  <div class="page-content" id="signalDetailContent">
+    <div class="loading-spinner"><div class="spinner"></div><p>Analysing...</p></div>
+  </div>
+</div>
+
+<!-- WATCHLIST PAGE -->
+<div class="page" id="page-watchlist">
+  <div class="page-header">
+    <h1>⭐ Watchlist</h1>
+  </div>
+  <div class="page-content">
+    <div id="watchlistContent">
+      <div class="empty-state" id="watchlistEmpty">
+        <span class="empty-icon">⭐</span>
+        <p>Your watchlist is empty</p>
+        <small>Add coins from the Signals page</small>
+        <button class="btn-primary" onclick="switchPage('signals')">Browse Signals</button>
+      </div>
+      <div id="watchlistItems"></div>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION PAGE -->
+<div class="page" id="page-education">
+  <div class="page-header">
+    <h1>🎓 Academy</h1>
+  </div>
+  <div class="page-content" id="educationContent">
+    <div class="edu-categories">
+      <button class="edu-cat-card" onclick="showEduCategory('crypto_basics')">
+        <span class="edu-icon">📚</span>
+        <div>
+          <div class="edu-cat-title">Crypto Basics</div>
+          <div class="edu-cat-sub">Bitcoin, Blockchain, Spot Trading</div>
+        </div>
+      </button>
+      <button class="edu-cat-card" onclick="showEduCategory('indicators')">
+        <span class="edu-icon">📊</span>
+        <div>
+          <div class="edu-cat-title">Indicators</div>
+          <div class="edu-cat-sub">RSI, MACD, EMA, ATR, ADX, Bollinger</div>
+        </div>
+      </button>
+      <button class="edu-cat-card" onclick="showEduCategory('candlestick')">
+        <span class="edu-icon">🕯</span>
+        <div>
+          <div class="edu-cat-title">Candlestick Patterns</div>
+          <div class="edu-cat-sub">Hammer, Engulfing, Morning Star & more</div>
+        </div>
+      </button>
+      <button class="edu-cat-card" onclick="showEduCategory('smc')">
+        <span class="edu-icon">🏦</span>
+        <div>
+          <div class="edu-cat-title">Smart Money Concepts</div>
+          <div class="edu-cat-sub">Order Block, FVG, BOS, CHoCH & more</div>
+        </div>
+      </button>
+      <button class="edu-cat-card" onclick="showEduCategory('risk_management')">
+        <span class="edu-icon">⚠️</span>
+        <div>
+          <div class="edu-cat-title">Risk Management</div>
+          <div class="edu-cat-sub">Stop Loss, Take Profit, Position Sizing</div>
+        </div>
+      </button>
+      <button class="edu-cat-card" onclick="showEduCategory('faq')">
+        <span class="edu-icon">❓</span>
+        <div>
+          <div class="edu-cat-title">FAQ</div>
+          <div class="edu-cat-sub">Common questions answered</div>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- EDUCATION CATEGORY PAGE -->
+<div class="page" id="page-edu-category">
+  <div class="page-header">
+    <button class="back-btn" onclick="switchPage('education')">◀️ Back</button>
+    <h1 id="eduCategoryTitle">Category</h1>
+  </div>
+  <div class="page-content" id="eduCategoryContent"></div>
+</div>
+
+<!-- LESSON PAGE -->
+<div class="page" id="page-lesson">
+  <div class="page-header">
+    <button class="back-btn" id="lessonBackBtn" onclick="closeLessonPage()">◀️ Back</button>
+    <h1 id="lessonTitle">Lesson</h1>
+  </div>
+  <div class="page-content" id="lessonContent"></div>
+</div>
+
+<!-- MARKET PAGE -->
+<div class="page" id="page-market">
+  <div class="page-header">
+    <h1>📊 Market Overview</h1>
+    <button class="refresh-btn" onclick="loadMarketData()">🔄</button>
+  </div>
+  <div class="page-content">
+    <div id="marketContent">
+      <div class="loading-spinner"><div class="spinner"></div><p>Loading market data...</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SETTINGS PAGE -->
+<div class="page" id="page-settings">
+  <div class="page-header">
+    <h1>⚙️ Settings</h1>
+  </div>
+  <div class="page-content">
+    <div class="settings-section">
+      <h2 class="settings-title">Analysis Timeframe</h2>
+      <div class="tf-selector">
+        <button class="tf-btn active" data-tf="1h" onclick="selectTimeframe(this)">1H</button>
+        <button class="tf-btn" data-tf="4h" onclick="selectTimeframe(this)">4H</button>
+        <button class="tf-btn" data-tf="1d" onclick="selectTimeframe(this)">1D</button>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h2 class="settings-title">Notifications</h2>
+      <div class="settings-toggle-row">
+        <span>Strong Buy Alerts</span>
+        <label class="toggle"><input type="checkbox" checked id="alertStrongBuy"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="settings-toggle-row">
+        <span>Breakout Alerts</span>
+        <label class="toggle"><input type="checkbox" checked id="alertBreakout"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="settings-toggle-row">
+        <span>Order Block Alerts</span>
+        <label class="toggle"><input type="checkbox" checked id="alertOrderBlock"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="settings-toggle-row">
+        <span>Liquidity Sweep Alerts</span>
+        <label class="toggle"><input type="checkbox" checked id="alertLiqSweep"><span class="toggle-slider"></span></label>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h2 class="settings-title">About</h2>
+      <div class="about-card">
+        <p>🌙 <strong>Halol Crypto AI</strong></p>
+        <p>Halal spot crypto analysis only.</p>
+        <p>No futures. No shorts. No leverage.</p>
+        <p class="version-text">v1.0.0 — Educational use only</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ -->
+<!-- TOAST                                             -->
+<!-- ══════════════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
