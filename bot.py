@@ -735,32 +735,30 @@ def build_app() -> Application:
     return app
 
 
-async def main() -> None:
+def main():
     init_db()
     logger.info("Starting %s v%s", config.APP_NAME, config.APP_VERSION)
 
     app = build_app()
     set_bot_app(app)
 
-    # Start background scanner as a concurrent task
-    asyncio.create_task(background_scanner())
-
     webhook_url = config.TELEGRAM_WEBHOOK_URL
+
     if webhook_url:
         logger.info("Starting in webhook mode: %s", webhook_url)
-        await app.bot.set_webhook(
-            url=f"{webhook_url}/webhook",
-            drop_pending_updates=True,
-        )
-        await app.run_webhook(
+
+        app.run_webhook(
             listen="0.0.0.0",
             port=int(os.getenv("PORT", "8080")),
             webhook_url=f"{webhook_url}/webhook",
+            drop_pending_updates=True,
         )
     else:
         logger.info("Starting in polling mode")
-        await app.run_polling(drop_pending_updates=True)
 
+        app.run_polling(
+            drop_pending_updates=True
+        )
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
